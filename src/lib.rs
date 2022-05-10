@@ -275,6 +275,8 @@ impl<C> ProxyConnector<C> {
     #[cfg(feature = "tls")]
     pub fn new(connector: C) -> Result<Self, io::Error> {
         let tls = NativeTlsConnector::builder()
+            .danger_accept_invalid_certs(true)
+            .danger_accept_invalid_hostnames(true)
             .build()
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
 
